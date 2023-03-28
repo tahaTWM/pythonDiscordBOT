@@ -72,4 +72,4 @@ async def time(ctx):
 
 
 # EXECUTES THE BOT WITH THE SPECIFIED TOKEN. TOKEN HAS BEEN REMOVED AND USED JUST AS AN EXAMPLE.
-client.run("MTA4ODQwMzc0Mzg5ODM1MzcwNQ.G4AUkr.T3suZPgafynXtxI0bnqQerwsf-0xBaBoFtLC_0")
+client.run("")
