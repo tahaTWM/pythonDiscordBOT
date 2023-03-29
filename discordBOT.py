@@ -1,3 +1,4 @@
+import asyncio
 import datetime
 import string
 import random
@@ -49,26 +50,46 @@ async def change_pref(ctx, prefix):
     await ctx.send(f'prefix is change to {prefix}')
 
 
+@client.event
+async def on_member_join(member):
+    await member.send(
+        'Hi! Welcome to our server, in 30 seconds you will get "Verified" '
+        'role, please read rules in that time.')
+    await asyncio.sleep(30)
+    verifiedRole = discord.utils.get(member.guild.roles, id="1090756064674336928")
+    await member.add_roles(verifiedRole)
+
+
 @client.command()
-async def gPassword(ctx, length):
+async def pword(ctx, length, hint):
     leng = int(length)
-    characters = string.ascii_letters + string.digits + string.punctuation
+    characters = string.ascii_letters + string.digits + "!#$%&()*+-.:;<=>?@[]^_`{|}"
     password = ''.join(random.choice(characters) for i in range(leng))
 
     now = datetime.datetime.now()
     current_time = now.strftime("%Y-%m-%d %H:%M:%S")
 
-    with open('passwords.json', 'w') as f:
-        json.dump(f"{current_time} : {password}", f, indent=4)
+    # read the password file
+    with open('passwords.json', 'r') as f:
+        pword = json.load(f)
 
-    return await ctx.send(f'your password is: {password}')
+    pword[str(hint)] = "".join(password)
+
+    # write on password file
+    with open('passwords.json', 'w') as f:
+        json.dump(pword, f, indent=4)
+
+    return await ctx.send(f"{hint} = {password} \nif you want to save password in"
+                          "type -save_password + your email")
+
+    # return await ctx.send(f"{hint} = {password}")
 
 
 @client.command()
 async def time(ctx):
     now = datetime.datetime.now()
     current_time = now.strftime("%Y-%m-%d %H:%M:%S")
-    return await ctx.send(f'your password is: {current_time}')
+    return await ctx.send(f'{current_time}')
 
 
 # EXECUTES THE BOT WITH THE SPECIFIED TOKEN. TOKEN HAS BEEN REMOVED AND USED JUST AS AN EXAMPLE.
