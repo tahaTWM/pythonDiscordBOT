@@ -1,8 +1,11 @@
 import asyncio
 import datetime
+import ssl
 import string
 import random
-import mailtrap as mt
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 import discord
 from discord.ext import commands
@@ -95,14 +98,23 @@ async def time(ctx):
 
 
 def send_email():
-    mail = mt.Mail(
-        sender=mt.Address(email="cs.17.037@student.uotechnology.edu.iq", name="TWM test"),
-        to=[mt.Address(email="taha.twm.1234@gmail.com")],
-        subject="You are awesome!",
-        text="Congrats for sending test email with Mailtrap!",
-    )
-    clent = mt.MailtrapClient(token="ac5373bf20d4120313c84a5d42fb63c7")
-    clent.send(mail)
+    SMTP_SERVER = 'smtp.gmail.com'
+    SMTP_PORT = 2525
+    SMTP_USERNAME = 'cs.17.037@student.uotechnology.edu.iq'
+    SMTP_PASSWORD = ''
+
+    # Sender and recipient
+    FROM_EMAIL = 'cs.17.037@student.uotechnology.edu.iq'
+    TO_EMAIL = 'taha.twm.123@gmail.com'
+
+    # Email content
+    message = 'Subject: Test email from Mailtrap\n\n'
+    message += 'Hello, this is a test email from Mailtrap'
+
+    # Connect to Mailtrap's SMTP server
+    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+        server.login(SMTP_USERNAME, SMTP_PASSWORD)
+        server.sendmail(FROM_EMAIL, TO_EMAIL, message)
 
 
 client.run("")

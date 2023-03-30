@@ -124,8 +124,9 @@ venv.bak/
 .mypy_cache/
 .dmypy.json
 dmypy.json
-*.bat
+.bat
 github.bat
+.github.bat
 
 # Pyre type checker
 .pyre/
