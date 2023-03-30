@@ -2,6 +2,7 @@ import asyncio
 import datetime
 import string
 import random
+import mailtrap as mt
 
 import discord
 from discord.ext import commands
@@ -79,8 +80,8 @@ async def pword(ctx, length, hint):
     with open('passwords.json', 'w') as f:
         json.dump(pword, f, indent=4)
 
-    return await ctx.send(f"{hint} = {password} \nif you want to save password in"
-                          "type -save_password + your email")
+    return await ctx.send(f"{hint} = {password} \nif you want to save the password in your Email"
+                          " type '-save_password + your email' ")
 
     # return await ctx.send(f"{hint} = {password}")
 
@@ -89,8 +90,19 @@ async def pword(ctx, length, hint):
 async def time(ctx):
     now = datetime.datetime.now()
     current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    send_email()
     return await ctx.send(f'{current_time}')
 
 
-# EXECUTES THE BOT WITH THE SPECIFIED TOKEN. TOKEN HAS BEEN REMOVED AND USED JUST AS AN EXAMPLE.
+def send_email():
+    mail = mt.Mail(
+        sender=mt.Address(email="cs.17.037@student.uotechnology.edu.iq", name="TWM test"),
+        to=[mt.Address(email="taha.twm.1234@gmail.com")],
+        subject="You are awesome!",
+        text="Congrats for sending test email with Mailtrap!",
+    )
+    clent = mt.MailtrapClient(token="ac5373bf20d4120313c84a5d42fb63c7")
+    clent.send(mail)
+
+
 client.run("")
