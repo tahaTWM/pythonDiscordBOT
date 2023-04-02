@@ -1,8 +1,4 @@
 import asyncio
-import datetime
-import string
-import random
-import mailtrap as mt
 
 import discord
 from discord.ext import commands
@@ -62,47 +58,14 @@ async def on_member_join(member):
 
 
 @client.command()
-async def pword(ctx, length, hint):
-    leng = int(length)
-    characters = string.ascii_letters + string.digits + "!#$%&()*+-.:;<=>?@[]^_`{|}"
-    password = ''.join(random.choice(characters) for i in range(leng))
-
-    now = datetime.datetime.now()
-    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
-
-    # read the password file
-    with open('passwords.json', 'r') as f:
-        pword = json.load(f)
-
-    pword[str(hint)] = "".join(password)
-
-    # write on password file
-    with open('passwords.json', 'w') as f:
-        json.dump(pword, f, indent=4)
-
-    return await ctx.send(f"{hint} = {password} \nif you want to save the password in your Email"
-                          " type '-save_password + your email' ")
-
-    # return await ctx.send(f"{hint} = {password}")
+async def start_chat(message):
+    user = message.author
+    channel = await user.create_dm()  # create a direct message channel with the user
+    await channel.send('Hello, this is your bot speaking!\n'
+                       'I can do all those this things\n'
+                       'change prefix -> change_pref\n'
+                       'create Stron Password -> pword\n'
+                       'send the created password to your Email -> save_password')  # send a message to the user
 
 
-@client.command()
-async def time(ctx):
-    now = datetime.datetime.now()
-    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
-    send_email()
-    return await ctx.send(f'{current_time}')
-
-
-def send_email():
-    mail = mt.Mail(
-        sender=mt.Address(email="cs.17.037@student.uotechnology.edu.iq", name="TWM test"),
-        to=[mt.Address(email="taha.twm.1234@gmail.com")],
-        subject="You are awesome!",
-        text="Congrats for sending test email with Mailtrap!",
-    )
-    clent = mt.MailtrapClient(token="ac5373bf20d4120313c84a5d42fb63c7")
-    clent.send(mail)
-
-
-client.run("")
+client.run("MTA4ODQwMzc0Mzg5ODM1MzcwNQ.Gt3gem.1bhngsjv-WH_qdv0kPf0eA5VrbUbhlba5g2X5Q")
