@@ -105,4 +105,4 @@ def send_email(email):
     server.quit()
 
 
-client.run("MTA4ODQwMzc0Mzg5ODM1MzcwNQ.Gt3gem.1bhngsjv-WH_qdv0kPf0eA5VrbUbhlba5g2X5Q")
+client.run("")

@@ -68,4 +68,4 @@ async def start_chat(message):
                        'send the created password to your Email -> save_password')  # send a message to the user
 
 
-client.run("MTA4ODQwMzc0Mzg5ODM1MzcwNQ.Gt3gem.1bhngsjv-WH_qdv0kPf0eA5VrbUbhlba5g2X5Q")
+client.run("")
