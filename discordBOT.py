@@ -117,4 +117,32 @@ def send_email():
         server.sendmail(FROM_EMAIL, TO_EMAIL, message)
 
 
+@client.command()
+async def start_chat(message):
+    user = message.author
+    channel = await user.create_dm()  # create a direct message channel with the user
+    await channel.send('Hello, this is your bot speaking!\n'
+                       'I can do all those this things\n'
+                       'change prefix -> change_pref\n'
+                       'create Stron Password -> pword\n'
+                       'send the created password to your Email -> save_password')  # send a message to the user
+
+
+@client.command()
+async def delete(ctx):
+    dm_channel = await ctx.author.create_dm()
+    messages_to_delete = []
+    async for message in dm_channel.history(limit=10):
+        messages_to_delete.append(message)
+
+    print(len(messages_to_delete))
+
+    deleted_count = 0
+    for message in messages_to_delete:
+        await message.delete()
+        deleted_count += 1
+        await asyncio.sleep(0.5)
+    await ctx.send(f'{deleted_count} messages deleted.')
+
+
 client.run("")
